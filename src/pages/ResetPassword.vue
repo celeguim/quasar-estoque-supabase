@@ -12,7 +12,7 @@
 
         <div class="full-width q-pt-md q-gutter-y-sm">
           <q-btn
-            label="Send New Password"
+            label="Reset Password"
             color="primary"
             class="full-width"
             outline

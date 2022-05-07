@@ -44,6 +44,11 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
+      env: {
+        SUPABASE_URL: "https://fetomfxnfnexjqlimwza.supabase.co",
+        SUPABASE_KEY:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZldG9tZnhuZm5leGpxbGltd3phIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTE2NTMwNTYsImV4cCI6MTk2NzIyOTA1Nn0.GILLrcHlEIOPW91tjqWL9BRqbGE0s1t73iQXWzDokPA",
+      },
       vueRouterMode: "history", // available values: 'hash', 'history'
 
       // transpile: false,

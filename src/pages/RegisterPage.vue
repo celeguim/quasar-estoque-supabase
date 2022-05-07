@@ -13,8 +13,26 @@
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Name is required']"
         />
-        <q-input label="Email" type="email" v-model="form.email" />
-        <q-input label="Password" type="password" v-model="form.password" />
+
+        <q-input
+          label="Email"
+          v-model="form.email"
+          type="email"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+        />
+
+        <q-input
+          label="Password"
+          v-model="form.password"
+          type="password"
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val && val.length > 6) ||
+              'Password must be greater than 6 chars',
+          ]"
+        />
 
         <div class="full-width q-pt-md q-gutter-y-sm">
           <q-btn
@@ -44,6 +62,7 @@
 import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import { useRouter } from "vue-router";
+import useNotify from "src/composables/UseNotify";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -51,6 +70,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const { register } = useAuthUser();
+    const { notifyError, notifySuccess } = useNotify();
 
     const form = ref({
       name: "",
@@ -60,16 +80,19 @@ export default defineComponent({
 
     const handleRegister = async () => {
       try {
-        console.log("handleRegister", form.value);
-
+        //console.log("handleRegister", form.value);
+        notifySuccess("Registering...");
         await register(form.value);
+        notifySuccess("Registered successfully!");
+
         router.push({
           path: "email-confirmation",
           query: { email: form.value.email },
         });
       } catch (error) {
-        console.log(error);
-        alert(error.message);
+        //console.log(error);
+        //alert(error.message);
+        notifyError(error.message);
       }
     };
     return { form, handleRegister };

@@ -5,13 +5,28 @@
       v-model="form"
       @submit.prevent="handleLogin"
     >
-
-      <p class="col-12 text-h5 text-center">-- Login --</p>
-      <p class="col-12 text-h5 text-center">-- Login --</p>
+      <p class="col-12 text-h5 text-center">Login</p>
 
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        <q-input label="Email" v-model="form.email" type="email" />
-        <q-input label="Password" v-model="form.password" type="password" />
+        <q-input
+          label="Email"
+          v-model="form.email"
+          type="email"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+        />
+
+        <q-input
+          label="Password"
+          v-model="form.password"
+          type="password"
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val && val.length > 5) ||
+              'Password must be greater than 6 chars',
+          ]"
+        />
 
         <div class="full-width q-pt-md">
           <q-btn
@@ -52,9 +67,10 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import { useRouter } from "vue-router";
+import useNotify from "src/composables/UseNotify";
 
 export default defineComponent({
   name: "LoginPage",
@@ -62,18 +78,28 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const { login } = useAuthUser();
+    const { notifyError, notifySuccess } = useNotify();
+    const { isLoggedIn } = useAuthUser();
 
     const form = ref({
       email: "",
       password: "",
     });
 
+    onMounted(() => {
+      if (isLoggedIn()) {
+        router.push("me");
+      }
+    });
+
     const handleLogin = async () => {
       try {
         await login(form.value);
+        notifySuccess("Login Successful");
         router.push("me");
       } catch (error) {
-        alert(error.message);
+        //alert(error.message);
+        notifyError(error.message);
       }
     };
 

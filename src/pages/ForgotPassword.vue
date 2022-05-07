@@ -43,6 +43,7 @@
 import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import { useRouter } from "vue-router";
+import useNotify from "src/composables/UseNotify";
 
 export default defineComponent({
   name: "ForgotPasswordPage",
@@ -50,6 +51,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const { sendPasswordResetEmail } = useAuthUser();
+    const { notifyError, notifySuccess } = useNotify();
 
     const form = ref({
       email: "luiz.celeguim@gmail.com",
@@ -57,12 +59,13 @@ export default defineComponent({
 
     const handleForgotPassword = async () => {
       try {
-        console.log(form.value.email);
+        //console.log(form.value.email);
         await sendPasswordResetEmail(form.value.email);
-        alert("sent email for reset " + form.value.email);
+        notifySuccess("sent email for reset " + form.value.email);
         router.push("/login");
       } catch (error) {
-        console.log(error);
+        //console.log(error);
+        notifyError(error.message);
       }
     };
 
