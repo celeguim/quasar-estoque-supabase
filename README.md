@@ -1,5 +1,7 @@
 # Quasar App (quasar-estoque-supabase)
 
+Branch: dev
+
 A Quasar Project
 
 ## Install the dependencies
