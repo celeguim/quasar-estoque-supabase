@@ -5,7 +5,7 @@
       v-model="form"
       @submit.prevent="handleLogin"
     >
-      <p class="col-12 text-h5 text-center">Login</p>
+      <p class="col-12 text-h5 text-center">-- Login --</p>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
         <q-input label="Email" v-model="form.email" type="email" />
         <q-input label="Password" v-model="form.password" type="password" />
