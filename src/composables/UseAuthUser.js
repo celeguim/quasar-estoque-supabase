@@ -2,6 +2,7 @@ import { ref } from "vue";
 import useSupabase from "boot/supabase";
 
 const user = ref(null);
+
 export default function useAuthUser() {
   const { supabase } = useSupabase();
   //console.log("supabase", supabase);
